@@ -843,7 +843,390 @@ async function main() {
     });
   }
 
-  console.log("Database seeded successfully with 5 products, variants, and EMI plans!");
+  // 6. Samsung Galaxy Z Fold 6
+  const fold6 = await prisma.product.create({
+    data: {
+      name: "Samsung Galaxy Z Fold 6",
+      slug: "samsung-galaxy-z-fold-6",
+      brand: "Samsung",
+      category: "Smartphones",
+      description:
+        "The ultimate ultra-slim foldable with Galaxy AI. Features a massive 7.6-inch Dynamic AMOLED 2X main display, Armor Aluminum frame, Snapdragon 8 Gen 3 for Galaxy, and an advanced 50MP ProVisual triple camera system.",
+      basePrice: 164999,
+      baseMrp: 174999,
+      rating: 4.9,
+      reviewCount: 680,
+      isNew: true,
+      specs: JSON.stringify({
+        display: '7.6" Main + 6.3" Cover Dynamic AMOLED 2X (1-120Hz, 2600 nits)',
+        chip: "Snapdragon 8 Gen 3 for Galaxy with ray-tracing vapor chamber",
+        camera: "50MP Wide with OIS + 12MP Ultra-Wide + 10MP 3x Telephoto",
+        battery: "4,400 mAh dual battery with 25W fast charging",
+        os: "One UI 6.1.1 based on Android 14 (7 years OS updates)",
+        weight: "239 grams",
+      }),
+      variants: {
+        create: [
+          {
+            name: "Silver Shadow / 256 GB",
+            colorName: "Silver Shadow",
+            colorHex: "#C0C0C0",
+            storage: "256 GB",
+            price: 164999,
+            mrp: 174999,
+            stock: 25,
+            sku: "ZF6-256-SLV",
+            images: {
+              create: [
+                {
+                  url: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1000&q=80",
+                  alt: "Samsung Galaxy Z Fold 6 Silver Shadow",
+                  isPrimary: true,
+                  order: 1,
+                },
+              ],
+            },
+          },
+          {
+            name: "Navy / 512 GB",
+            colorName: "Navy",
+            colorHex: "#1C2D42",
+            storage: "512 GB",
+            price: 176999,
+            mrp: 186999,
+            stock: 20,
+            sku: "ZF6-512-NVY",
+            images: {
+              create: [
+                {
+                  url: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1000&q=80",
+                  alt: "Samsung Galaxy Z Fold 6 Navy",
+                  isPrimary: true,
+                  order: 1,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  const fold6Plans = [
+    {
+      tenureMonths: 3,
+      monthlyAmount: 54999,
+      interestRate: 0.0,
+      cashbackAmount: 10000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 190000,
+      highlightTag: "Fast Payoff",
+    },
+    {
+      tenureMonths: 6,
+      monthlyAmount: 27500,
+      interestRate: 0.0,
+      cashbackAmount: 10000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 190000,
+      highlightTag: "Most Popular",
+    },
+    {
+      tenureMonths: 12,
+      monthlyAmount: 13750,
+      interestRate: 0.0,
+      cashbackAmount: 10000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 190000,
+      highlightTag: "Recommended (0% Interest)",
+    },
+    {
+      tenureMonths: 24,
+      monthlyAmount: 6875,
+      interestRate: 0.0,
+      cashbackAmount: 10000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 190000,
+      highlightTag: "0% Interest",
+    },
+    {
+      tenureMonths: 36,
+      monthlyAmount: 5565,
+      interestRate: 10.5,
+      cashbackAmount: 10000,
+      isZeroInterest: false,
+      processingFee: 499,
+      mutualFundPledgeAmount: 200000,
+      highlightTag: "Lowest Monthly",
+    },
+  ];
+
+  for (const plan of fold6Plans) {
+    await prisma.emiPlan.create({
+      data: {
+        ...plan,
+        productId: fold6.id,
+      },
+    });
+  }
+
+  // 7. Xiaomi 14 Ultra 5G
+  const xiaomi = await prisma.product.create({
+    data: {
+      name: "Xiaomi 14 Ultra 5G",
+      slug: "xiaomi-14-ultra",
+      brand: "Xiaomi",
+      category: "Smartphones",
+      description:
+        "Co-engineered with Leica. Features a massive 1-inch Sony LYT-900 sensor with stepless variable aperture (f/1.63 - f/4.0), Leica Quad 50MP optical lenses, Snapdragon 8 Gen 3, and 90W wired plus 80W wireless HyperCharge.",
+      basePrice: 99999,
+      baseMrp: 119999,
+      rating: 4.8,
+      reviewCount: 540,
+      isNew: true,
+      specs: JSON.stringify({
+        display: '6.73" WQHD+ 120Hz LTPO AMOLED (3000 nits peak)',
+        chip: "Snapdragon 8 Gen 3 Mobile Platform with Dual-Channel IceLoop",
+        camera: "Leica Quad Camera: 50MP 1-inch LYT-900 + 50MP 3.2x Telephoto + 50MP 5x Periscope + 50MP Ultra-Wide",
+        battery: "5,000 mAh with 90W wired & 80W wireless HyperCharge",
+        os: "Xiaomi HyperOS based on Android 14",
+        weight: "219.8 grams",
+      }),
+      variants: {
+        create: [
+          {
+            name: "Black Vegan Leather / 512 GB",
+            colorName: "Black",
+            colorHex: "#1A1A1A",
+            storage: "512 GB",
+            price: 99999,
+            mrp: 119999,
+            stock: 30,
+            sku: "X14U-512-BLK",
+            images: {
+              create: [
+                {
+                  url: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1000&q=80",
+                  alt: "Xiaomi 14 Ultra Black",
+                  isPrimary: true,
+                  order: 1,
+                },
+              ],
+            },
+          },
+          {
+            name: "White Vegan Leather / 512 GB",
+            colorName: "White",
+            colorHex: "#F2F2F0",
+            storage: "512 GB",
+            price: 99999,
+            mrp: 119999,
+            stock: 25,
+            sku: "X14U-512-WHT",
+            images: {
+              create: [
+                {
+                  url: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1000&q=80",
+                  alt: "Xiaomi 14 Ultra White",
+                  isPrimary: true,
+                  order: 1,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  const xiaomiPlans = [
+    {
+      tenureMonths: 3,
+      monthlyAmount: 33333,
+      interestRate: 0.0,
+      cashbackAmount: 6000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 115000,
+      highlightTag: "Fast Payoff",
+    },
+    {
+      tenureMonths: 6,
+      monthlyAmount: 16666,
+      interestRate: 0.0,
+      cashbackAmount: 6000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 115000,
+      highlightTag: "Most Popular",
+    },
+    {
+      tenureMonths: 12,
+      monthlyAmount: 8333,
+      interestRate: 0.0,
+      cashbackAmount: 6000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 115000,
+      highlightTag: "Recommended (0% Interest)",
+    },
+    {
+      tenureMonths: 24,
+      monthlyAmount: 4166,
+      interestRate: 0.0,
+      cashbackAmount: 6000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 115000,
+      highlightTag: "0% Interest",
+    },
+    {
+      tenureMonths: 36,
+      monthlyAmount: 3373,
+      interestRate: 10.5,
+      cashbackAmount: 6000,
+      isZeroInterest: false,
+      processingFee: 399,
+      mutualFundPledgeAmount: 125000,
+      highlightTag: "Lowest Monthly",
+    },
+  ];
+
+  for (const plan of xiaomiPlans) {
+    await prisma.emiPlan.create({
+      data: {
+        ...plan,
+        productId: xiaomi.id,
+      },
+    });
+  }
+
+  // 8. Nothing Phone (2)
+  const nothing = await prisma.product.create({
+    data: {
+      name: "Nothing Phone (2)",
+      slug: "nothing-phone-2",
+      brand: "Nothing",
+      category: "Smartphones",
+      description:
+        "Iconic transparent design with the customized Glyph Interface. Powered by Snapdragon 8+ Gen 1, 50MP Sony IMX890 dual cameras with advanced HDR, and clean Nothing OS 2.5 with zero bloatware.",
+      basePrice: 36999,
+      baseMrp: 44999,
+      rating: 4.7,
+      reviewCount: 810,
+      isNew: false,
+      specs: JSON.stringify({
+        display: '6.7" Flexible LTPO OLED (1-120Hz, 1600 nits peak)',
+        chip: "Qualcomm Snapdragon 8+ Gen 1 (4nm)",
+        camera: "50MP Sony IMX890 Main with OIS + 50MP Samsung JN1 Ultra-Wide",
+        battery: "4,700 mAh with 45W PPS charging & 15W Qi wireless",
+        os: "Nothing OS 2.5 based on Android 14",
+        weight: "201.2 grams",
+      }),
+      variants: {
+        create: [
+          {
+            name: "Dark Grey / 128 GB",
+            colorName: "Dark Grey",
+            colorHex: "#3A3D40",
+            storage: "128 GB",
+            price: 36999,
+            mrp: 44999,
+            stock: 40,
+            sku: "NP2-128-GRY",
+            images: {
+              create: [
+                {
+                  url: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1000&q=80",
+                  alt: "Nothing Phone 2 Dark Grey",
+                  isPrimary: true,
+                  order: 1,
+                },
+              ],
+            },
+          },
+          {
+            name: "White / 256 GB",
+            colorName: "White",
+            colorHex: "#EAEAEA",
+            storage: "256 GB",
+            price: 39999,
+            mrp: 49999,
+            stock: 35,
+            sku: "NP2-256-WHT",
+            images: {
+              create: [
+                {
+                  url: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1000&q=80",
+                  alt: "Nothing Phone 2 White",
+                  isPrimary: true,
+                  order: 1,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  const nothingPlans = [
+    {
+      tenureMonths: 3,
+      monthlyAmount: 12333,
+      interestRate: 0.0,
+      cashbackAmount: 3000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 45000,
+      highlightTag: "Fast Payoff",
+    },
+    {
+      tenureMonths: 6,
+      monthlyAmount: 6166,
+      interestRate: 0.0,
+      cashbackAmount: 3000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 45000,
+      highlightTag: "Most Popular",
+    },
+    {
+      tenureMonths: 12,
+      monthlyAmount: 3083,
+      interestRate: 0.0,
+      cashbackAmount: 3000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 45000,
+      highlightTag: "Recommended (0% Interest)",
+    },
+    {
+      tenureMonths: 24,
+      monthlyAmount: 1541,
+      interestRate: 0.0,
+      cashbackAmount: 3000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 45000,
+      highlightTag: "0% Interest",
+    },
+  ];
+
+  for (const plan of nothingPlans) {
+    await prisma.emiPlan.create({
+      data: {
+        ...plan,
+        productId: nothing.id,
+      },
+    });
+  }
+
+  console.log("Database seeded successfully with 8 products, variants, and EMI plans!");
 }
 
 main()

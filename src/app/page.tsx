@@ -117,6 +117,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 { label: "Samsung", value: "Samsung" },
                 { label: "Google", value: "Google" },
                 { label: "OnePlus", value: "OnePlus" },
+                { label: "Xiaomi", value: "Xiaomi" },
+                { label: "Nothing", value: "Nothing" },
               ].map((item) => {
                 const isActive = brand === item.value;
                 return (
