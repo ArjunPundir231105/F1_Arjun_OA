@@ -139,17 +139,17 @@ export default function ProceedModal({
           </button>
           <div className="flex items-center gap-2 mb-2">
             <span className="bg-white/20 text-white text-xs px-2.5 py-0.5 rounded-full font-semibold">
-              1Fi FastTrack Application
+              EMI Application
             </span>
             <span className="flex items-center gap-1 text-emerald-300 text-xs font-medium">
-              <Lock className="w-3 h-3" /> 256-Bit Encrypted
+              <Lock className="w-3 h-3" /> Secure Verification
             </span>
           </div>
           <h3 className="text-xl font-bold">
-            {step === 3 ? "Application Approved! 🎉" : "Confirm Plan & Pledge Mutual Funds"}
+            {step === 3 ? "Application Approved" : "Pledge Mutual Funds & Proceed"}
           </h3>
           <p className="text-xs text-indigo-100 mt-1">
-            Zero paper work. Instant approval via CAMS & KFintech PAN lookup.
+            Instant electronic lien verification via CAMS & KFintech.
           </p>
         </div>
 
@@ -356,7 +356,7 @@ export default function ProceedModal({
               <div className="p-3 bg-indigo-50 border border-indigo-200 rounded-xl flex items-center gap-3">
                 <TrendingUp className="w-6 h-6 text-indigo-600 shrink-0" />
                 <p className="text-[11px] text-indigo-900 leading-snug">
-                  <strong>Great financial move:</strong> Your ₹{selectedVariant.price.toLocaleString("en-IN")} remains invested in compounding equity funds rather than an upfront cash outflow!
+                  Your mutual fund units remain in your folio and continue to earn market returns during the tenure.
                 </p>
               </div>
 

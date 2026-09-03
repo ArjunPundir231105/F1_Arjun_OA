@@ -10,9 +10,6 @@ export function formatNumber(num: number): string {
   return new Intl.NumberFormat("en-IN").format(num);
 }
 
-/**
- * Calculates monthly EMI for a given principal, tenure in months, and annual interest rate.
- */
 export function calculateDynamicEmi(
   principal: number,
   tenureMonths: number,
@@ -32,10 +29,6 @@ export function calculateDynamicEmi(
   return Math.round(emi);
 }
 
-/**
- * Calculates estimated compounded returns on the mutual fund pledge during the tenure.
- * Default equity mutual fund expected CAGR is ~12.5% p.a.
- */
 export function calculateMfReturns(
   pledgeAmount: number,
   tenureMonths: number,

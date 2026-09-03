@@ -71,7 +71,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           <div className="max-w-7xl mx-auto relative z-10 text-center">
             <div className="inline-flex items-center gap-2 bg-indigo-500/20 border border-indigo-400/30 px-3 py-1 rounded-full text-xs font-semibold text-indigo-300 mb-6 backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-indigo-300" />
-              <span>Next-Gen Consumer Credit by 1Fi</span>
+              <span>1Fi Device Financing</span>
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight max-w-4xl mx-auto leading-tight">
               Get Flagship Gadgets On EMI{" "}
@@ -80,10 +80,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               </span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Don’t liquidate your investments or pay high interest fees. Pledge your mutual fund portfolio, enjoy 0% interest EMI, and keep earning market compounding!
+              Keep your investments compounding in the market while you pay easy monthly EMIs with 0% interest.
             </p>
 
-            {/* Value Pills */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-xs font-medium text-slate-300">
               <div className="flex items-center gap-1.5 bg-white/10 px-3.5 py-1.5 rounded-full backdrop-blur-sm border border-white/10">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" /> 0% Interest Plans (3–24 Mos)
@@ -92,7 +91,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 <TrendingUp className="w-4 h-4 text-indigo-400" /> Portfolio Stays Invested
               </div>
               <div className="flex items-center gap-1.5 bg-white/10 px-3.5 py-1.5 rounded-full backdrop-blur-sm border border-white/10">
-                <ShieldCheck className="w-4 h-4 text-purple-400" /> CAMS & KFintech Approved
+                <ShieldCheck className="w-4 h-4 text-purple-400" /> CAMS & KFintech Verified
               </div>
             </div>
           </div>
@@ -103,10 +102,10 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 border-b border-slate-200 pb-5">
             <div>
               <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
-                Available Flagships with Mutual Fund EMI
+                Available Flagships
               </h2>
               <p className="text-xs text-slate-500 mt-1">
-                Showing dynamic database records with live EMI pricing and instant pledge options.
+                Explore flagships eligible for 0% interest EMI and cashback rewards.
               </p>
             </div>
 

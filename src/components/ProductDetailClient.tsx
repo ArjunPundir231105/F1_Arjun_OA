@@ -168,7 +168,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      {/* Breadcrumb matching Snapmint style */}
       <nav className="flex items-center gap-2 text-xs text-slate-500 mb-6 flex-wrap font-medium">
         <Link href="/" className="hover:text-indigo-600">
           Shop on EMI
@@ -187,14 +186,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         </span>
       </nav>
 
-      {/* Main Grid: Left (Product Showcase) & Right (EMI Plans & Pricing) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-        {/* ================= LEFT COLUMN: Product Gallery & Specs ================= */}
         <div className="lg:col-span-5 flex flex-col">
           <div className="sticky top-24 space-y-6">
-            {/* Gallery Card */}
             <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col">
-              {/* Product Header Badges */}
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   {product.isNew && (
@@ -216,7 +211,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 </div>
               </div>
 
-              {/* Title & Storage Subheading */}
               <div className="mb-4">
                 <h1 className="text-2xl font-black text-slate-900 tracking-tight">
                   {product.name}
@@ -226,7 +220,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 </p>
               </div>
 
-              {/* Main Image Display */}
               <div className="relative aspect-square w-full max-w-sm mx-auto flex items-center justify-center p-4">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -236,7 +229,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 />
               </div>
 
-              {/* Finishes Swatch Selector (Matching Reference: "Available in 3 finishes") */}
               <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col items-center">
                 <span className="text-xs font-semibold text-slate-500 mb-2">
                   Available in {colorOptions.length} finishes
@@ -357,9 +349,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           </div>
         </div>
 
-        {/* ================= RIGHT COLUMN: Price & EMI Plans (Matches Reference) ================= */}
         <div className="lg:col-span-7 flex flex-col space-y-6">
-          {/* Top Price Section */}
           <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
             <div className="flex flex-wrap items-baseline gap-3">
               <span className="text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -373,7 +363,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </span>
             </div>
 
-            {/* Subtitle matching reference: "EMI plans backed by mutual funds" */}
             <div className="mt-3 flex items-center gap-2">
               <h2 className="text-base font-bold text-indigo-950">
                 EMI plans backed by mutual funds
@@ -386,7 +375,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </span>
             </div>
 
-            {/* 1Fi Wealth Compounding Banner */}
             <div className="mt-4 bg-gradient-to-r from-indigo-50 via-purple-50 to-emerald-50 border border-indigo-200 rounded-2xl p-4 flex items-start gap-3">
               <div className="p-2 rounded-xl bg-indigo-600 text-white shrink-0 mt-0.5">
                 <TrendingUp className="w-4 h-4" />
@@ -411,7 +399,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </div>
             </div>
 
-            {/* Filter Tabs */}
             <div className="mt-6 flex items-center gap-2 border-b border-slate-100 pb-3">
               <button
                 onClick={() => setPlanFilter("all")}
@@ -445,7 +432,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </button>
             </div>
 
-            {/* Available EMI Plans List (Directly Matching PDF Reference Structure) */}
             <div className="mt-4 space-y-3">
               {filteredPlans.map((plan) => {
                 const isSelected = selectedPlan.id === plan.id;
@@ -565,10 +551,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
           </div>
 
-          {/* FAQ / Trust Information */}
+          {/* Trust Information */}
           <div className="bg-slate-100/70 rounded-2xl border border-slate-200 p-5 space-y-3">
             <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-              1Fi Guarantee
+              Plan Highlights
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-600">
               <div className="flex items-start gap-2">

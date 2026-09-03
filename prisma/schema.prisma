@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -22,7 +19,7 @@ model Product {
   rating      Float          @default(4.8)
   reviewCount Int            @default(1200)
   isNew       Boolean        @default(false)
-  specs       String         // JSON string for specifications (Chip, Display, Battery, Camera)
+  specs       String
   variants    Variant[]
   emiPlans    EmiPlan[]
   orders      Order[]
@@ -74,26 +71,26 @@ model EmiPlan {
   isZeroInterest         Boolean  @default(false)
   processingFee          Float    @default(0.0)
   mutualFundPledgeAmount Float
-  highlightTag           String?  // e.g. "Most Popular", "Zero Interest", "Recommended"
+  highlightTag           String?
   createdAt              DateTime @default(now())
 }
 
 model Order {
-  id                      String   @id @default(cuid())
-  customerName            String
-  customerEmail           String
-  customerPhone           String
-  panNumber               String
-  productId               String
-  product                 Product  @relation(fields: [productId], references: [id])
-  variantId               String
-  variant                 Variant  @relation(fields: [variantId], references: [id])
-  emiPlanId               String
-  tenureMonths            Int
-  monthlyAmount           Float
-  totalAmount             Float
-  status                  String   @default("APPROVED") // PENDING, APPROVED, PLEDGED
-  folioNumber             String?  // Simulated MF Folio
-  mutualFundUnitsPledged  Float?
-  createdAt               DateTime @default(now())
+  id                     String   @id @default(cuid())
+  customerName           String
+  customerEmail          String
+  customerPhone          String
+  panNumber              String
+  productId              String
+  product                Product  @relation(fields: [productId], references: [id])
+  variantId              String
+  variant                Variant  @relation(fields: [variantId], references: [id])
+  emiPlanId              String
+  tenureMonths           Int
+  monthlyAmount          Float
+  totalAmount            Float
+  status                 String   @default("APPROVED")
+  folioNumber            String?
+  mutualFundUnitsPledged Float?
+  createdAt              DateTime @default(now())
 }
