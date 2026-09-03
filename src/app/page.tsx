@@ -21,6 +21,7 @@ interface HomePageProps {
   searchParams: Promise<{
     brand?: string;
     search?: string;
+    sort?: string;
   }>;
 }
 
@@ -28,6 +29,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const resolvedParams = await searchParams;
   const brand = resolvedParams.brand || "all";
   const search = resolvedParams.search || "";
+  const sort = resolvedParams.sort || "newest";
 
   const whereClause: Record<string, unknown> = {};
 
@@ -41,6 +43,15 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       { brand: { contains: search } },
       { description: { contains: search } },
     ];
+  }
+
+  let orderByClause: Record<string, "asc" | "desc"> = { createdAt: "desc" };
+  if (sort === "price_asc") {
+    orderByClause = { basePrice: "asc" };
+  } else if (sort === "price_desc") {
+    orderByClause = { basePrice: "desc" };
+  } else if (sort === "rating") {
+    orderByClause = { rating: "desc" };
   }
 
   const products = await prisma.product.findMany({
@@ -57,7 +68,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         orderBy: { tenureMonths: "asc" },
       },
     },
-    orderBy: { createdAt: "desc" },
+    orderBy: orderByClause,
   });
 
   return (
@@ -109,32 +120,72 @@ export default async function HomePage({ searchParams }: HomePageProps) {
               </p>
             </div>
 
-            {/* Brand Filter Buttons */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0">
-              {[
-                { label: "All Brands", value: "all" },
-                { label: "Apple", value: "Apple" },
-                { label: "Samsung", value: "Samsung" },
-                { label: "Google", value: "Google" },
-                { label: "OnePlus", value: "OnePlus" },
-                { label: "Xiaomi", value: "Xiaomi" },
-                { label: "Nothing", value: "Nothing" },
-              ].map((item) => {
-                const isActive = brand === item.value;
-                return (
-                  <Link
-                    key={item.value}
-                    href={item.value === "all" ? "/" : `/?brand=${item.value}`}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                      isActive
-                        ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
-                        : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-100"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
+            {/* Filter and Sort Controls */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+                {[
+                  { label: "All Brands", value: "all" },
+                  { label: "Apple", value: "Apple" },
+                  { label: "Samsung", value: "Samsung" },
+                  { label: "Google", value: "Google" },
+                  { label: "OnePlus", value: "OnePlus" },
+                  { label: "Xiaomi", value: "Xiaomi" },
+                  { label: "Nothing", value: "Nothing" },
+                ].map((item) => {
+                  const isActive = brand === item.value;
+                  const query = new URLSearchParams();
+                  if (item.value !== "all") query.set("brand", item.value);
+                  if (search) query.set("search", search);
+                  if (sort !== "newest") query.set("sort", sort);
+                  const href = query.toString() ? `/?${query.toString()}` : "/";
+
+                  return (
+                    <Link
+                      key={item.value}
+                      href={href}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                        isActive
+                          ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
+                          : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-100"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              {/* Sort Selector */}
+              <div className="flex items-center gap-1 bg-white border border-slate-200 rounded-xl p-1 text-xs shrink-0 self-start sm:self-auto">
+                <span className="text-[11px] font-semibold text-slate-400 pl-2 pr-1">Sort:</span>
+                {[
+                  { label: "Newest", value: "newest" },
+                  { label: "Price: Low to High", value: "price_asc" },
+                  { label: "Price: High to Low", value: "price_desc" },
+                  { label: "Top Rated", value: "rating" },
+                ].map((s) => {
+                  const isActive = sort === s.value;
+                  const query = new URLSearchParams();
+                  if (brand !== "all") query.set("brand", brand);
+                  if (search) query.set("search", search);
+                  if (s.value !== "newest") query.set("sort", s.value);
+                  const href = query.toString() ? `/?${query.toString()}` : "/";
+
+                  return (
+                    <Link
+                      key={s.value}
+                      href={href}
+                      className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
+                        isActive
+                          ? "bg-slate-900 text-white font-semibold"
+                          : "text-slate-600 hover:text-slate-950"
+                      }`}
+                    >
+                      {s.label}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
 

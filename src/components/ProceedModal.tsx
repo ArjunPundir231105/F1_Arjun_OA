@@ -14,6 +14,8 @@ import {
   AlertCircle,
   FileCheck,
   Lock,
+  Printer,
+  ExternalLink,
 } from "lucide-react";
 
 interface ProceedModalProps {
@@ -351,6 +353,10 @@ export default function ProceedModal({
                     {formatCurrency(confirmedOrder.monthlyAmount)} (on 5th of next month)
                   </span>
                 </div>
+                <div className="flex justify-between border-t border-emerald-200/60 pt-2 text-[11px] text-slate-500">
+                  <span>Applicant PAN:</span>
+                  <span className="font-mono">{formData.pan ? formData.pan.slice(0, 2) + "******" + formData.pan.slice(-2).toUpperCase() : "ABCDE1234F"}</span>
+                </div>
               </div>
 
               <div className="p-3 bg-indigo-50 border border-indigo-200 rounded-xl flex items-center gap-3">
@@ -358,6 +364,24 @@ export default function ProceedModal({
                 <p className="text-[11px] text-indigo-900 leading-snug">
                   Your mutual fund units remain in your folio and continue to earn market returns during the tenure.
                 </p>
+              </div>
+
+              <div className="flex gap-2.5 pt-1">
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className="flex-1 border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold py-2.5 rounded-xl transition-colors text-xs flex items-center justify-center gap-1.5"
+                >
+                  <Printer className="w-4 h-4 text-slate-500" />
+                  <span>Print Receipt</span>
+                </button>
+                <a
+                  href={`/track?id=${confirmedOrder.id}`}
+                  className="flex-1 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 text-indigo-700 font-semibold py-2.5 rounded-xl transition-colors text-xs flex items-center justify-center gap-1.5"
+                >
+                  <span>Track Order</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
               </div>
 
               <button

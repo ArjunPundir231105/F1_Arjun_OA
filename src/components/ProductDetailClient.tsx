@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { Product, Variant, EmiPlan } from "@/types";
-import { formatCurrency, calculateDynamicEmi, calculateMfReturns } from "@/lib/utils";
+import { formatCurrency, formatNumber, calculateDynamicEmi, calculateMfReturns } from "@/lib/utils";
 import ProceedModal from "@/components/ProceedModal";
 import {
   Star,
@@ -138,6 +138,18 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCagr, setSelectedCagr] = useState(12.5);
+
+  const dynamicMfGain = useMemo(() => {
+    if (!selectedPlan) return 0;
+    return calculateMfReturns(pledgeAmount, selectedPlan.tenureMonths, selectedCagr).gain;
+  }, [pledgeAmount, selectedPlan, selectedCagr]);
+
+  const ccInterest = useMemo(() => {
+    if (!selectedPlan) return 0;
+    const years = selectedPlan.tenureMonths / 12;
+    return Math.round(selectedVariant.price * 0.15 * years * 0.55);
+  }, [selectedVariant.price, selectedPlan]);
 
   // Active Images
   const currentImages = selectedVariant.images?.length
@@ -548,6 +560,115 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 <span>Proceed with Selected Plan</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
+            </div>
+          </div>
+
+          {/* Payment Modes Comparison */}
+          <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+              <div>
+                <h3 className="text-sm font-bold text-slate-900">Payment Modes Comparison</h3>
+                <p className="text-xs text-slate-500">Compare 1Fi Mutual Fund EMI with traditional credit options</p>
+              </div>
+              <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+                <span className="text-slate-500 text-[11px] pl-1.5">CAGR:</span>
+                {[10, 12.5, 15].map((rate) => (
+                  <button
+                    key={rate}
+                    onClick={() => setSelectedCagr(rate)}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                      selectedCagr === rate
+                        ? "bg-indigo-600 text-white shadow-xs"
+                        : "text-slate-600 hover:text-slate-900"
+                    }`}
+                  >
+                    {rate}%
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+              <div className="border-2 border-indigo-600 bg-indigo-50/40 rounded-2xl p-4 flex flex-col justify-between relative overflow-hidden">
+                <span className="bg-indigo-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full absolute top-3 right-3">
+                  BEST MOVE
+                </span>
+                <div>
+                  <h4 className="font-bold text-indigo-950 text-sm">1Fi Mutual Fund EMI</h4>
+                  <div className="mt-2.5 space-y-1.5 text-slate-600">
+                    <div className="flex justify-between">
+                      <span>Interest Paid:</span>
+                      <strong className="text-emerald-700">₹0 (0% APR)</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Cashback:</span>
+                      <strong className="text-emerald-700">+{formatCurrency(selectedPlan.cashbackAmount)}</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>MF Growth ({selectedCagr}%):</span>
+                      <strong className="text-indigo-700">+{formatCurrency(dynamicMfGain)}</strong>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 pt-3 border-t border-indigo-200">
+                  <span className="text-[11px] text-slate-500 block font-medium">Net Benefit:</span>
+                  <span className="text-base font-extrabold text-indigo-900">
+                    +{formatCurrency(dynamicMfGain + selectedPlan.cashbackAmount)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="border border-slate-200 bg-slate-50/70 rounded-2xl p-4 flex flex-col justify-between">
+                <div>
+                  <h4 className="font-bold text-slate-800 text-sm">Credit Card EMI (15%)</h4>
+                  <div className="mt-2.5 space-y-1.5 text-slate-600">
+                    <div className="flex justify-between">
+                      <span>Interest Paid:</span>
+                      <strong className="text-rose-600">-₹{formatNumber(ccInterest)}</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Processing Fee:</span>
+                      <strong className="text-slate-700">-₹1,499</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Investment Growth:</span>
+                      <strong className="text-slate-400">₹0</strong>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-200">
+                  <span className="text-[11px] text-slate-500 block font-medium">Cost of Borrowing:</span>
+                  <span className="text-base font-extrabold text-rose-600">
+                    -₹{formatNumber(ccInterest + 1499)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="border border-slate-200 bg-slate-50/70 rounded-2xl p-4 flex flex-col justify-between">
+                <div>
+                  <h4 className="font-bold text-slate-800 text-sm">Pay Upfront Cash</h4>
+                  <div className="mt-2.5 space-y-1.5 text-slate-600">
+                    <div className="flex justify-between">
+                      <span>Upfront Outflow:</span>
+                      <strong className="text-slate-900">{formatCurrency(selectedVariant.price)}</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Interest:</span>
+                      <strong className="text-slate-700">₹0</strong>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Missed Returns:</span>
+                      <strong className="text-amber-700">-₹{formatNumber(dynamicMfGain)}</strong>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-200">
+                  <span className="text-[11px] text-slate-500 block font-medium">Opportunity Cost:</span>
+                  <span className="text-base font-extrabold text-amber-700">
+                    -₹{formatNumber(dynamicMfGain)}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 

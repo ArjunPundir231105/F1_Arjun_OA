@@ -88,3 +88,53 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+    const query = searchParams.get("query");
+
+    if (!id && !query) {
+      return NextResponse.json(
+        { success: false, error: "Please provide an Order ID, Folio Number, or PAN" },
+        { status: 400 }
+      );
+    }
+
+    const order = await prisma.order.findFirst({
+      where: id
+        ? { id }
+        : {
+            OR: [
+              { id: query || undefined },
+              { folioNumber: query || undefined },
+              { panNumber: query ? query.trim().toUpperCase() : undefined },
+            ],
+          },
+      include: {
+        product: true,
+        variant: true,
+      },
+    });
+
+    if (!order) {
+      return NextResponse.json(
+        { success: false, error: "No matching application or order found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: order,
+    });
+  } catch (error) {
+    console.error("Order lookup failed:", error);
+    return NextResponse.json(
+      { success: false, error: "Failed to query order details" },
+      { status: 500 }
+    );
+  }
+}
+
