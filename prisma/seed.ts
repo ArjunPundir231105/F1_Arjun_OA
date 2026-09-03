@@ -549,7 +549,301 @@ async function main() {
     });
   }
 
-  console.log("Database seeded successfully with 3 products, variants, and EMI plans!");
+  // 4. OnePlus 12 5G
+  const oneplus = await prisma.product.create({
+    data: {
+      name: "OnePlus 12 5G",
+      slug: "oneplus-12",
+      brand: "OnePlus",
+      category: "Smartphones",
+      description:
+        "Flagship power with Snapdragon 8 Gen 3 processor, 4th Gen Hasselblad Camera System, ultra-bright 2K 120Hz ProXDR display, and 5400mAh battery with 100W SUPERVOOC fast charging.",
+      basePrice: 64999,
+      baseMrp: 69999,
+      rating: 4.8,
+      reviewCount: 920,
+      isNew: true,
+      specs: JSON.stringify({
+        display: '6.82" 2K 120Hz ProXDR LTPO AMOLED (4500 nits peak)',
+        chip: "Qualcomm Snapdragon 8 Gen 3 with Adreno 750",
+        camera: "50MP Sony LYT-808 + 64MP 3x Periscope Telephoto + 48MP Ultra-Wide",
+        battery: "5,400 mAh with 100W SUPERVOOC Wired & 50W AIRVOOC Wireless",
+        os: "OxygenOS 14 based on Android 14",
+        weight: "220 grams",
+      }),
+      variants: {
+        create: [
+          {
+            name: "Flowy Emerald / 256 GB",
+            colorName: "Flowy Emerald",
+            colorHex: "#2E5A44",
+            storage: "256 GB",
+            price: 64999,
+            mrp: 69999,
+            stock: 45,
+            sku: "OP12-256-EMR",
+            images: {
+              create: [
+                {
+                  url: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1000&q=80",
+                  alt: "OnePlus 12 Flowy Emerald Front",
+                  isPrimary: true,
+                  order: 1,
+                },
+                {
+                  url: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1000&q=80",
+                  alt: "OnePlus 12 Camera Detail",
+                  isPrimary: false,
+                  order: 2,
+                },
+              ],
+            },
+          },
+          {
+            name: "Silky Black / 512 GB",
+            colorName: "Silky Black",
+            colorHex: "#1C1C1C",
+            storage: "512 GB",
+            price: 69999,
+            mrp: 74999,
+            stock: 30,
+            sku: "OP12-512-BLK",
+            images: {
+              create: [
+                {
+                  url: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1000&q=80",
+                  alt: "OnePlus 12 Silky Black",
+                  isPrimary: true,
+                  order: 1,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  const oneplusPlans = [
+    {
+      tenureMonths: 3,
+      monthlyAmount: 21666,
+      interestRate: 0.0,
+      cashbackAmount: 4000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 75000,
+      highlightTag: "Fast Payoff",
+    },
+    {
+      tenureMonths: 6,
+      monthlyAmount: 10833,
+      interestRate: 0.0,
+      cashbackAmount: 4000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 75000,
+      highlightTag: "Most Popular",
+    },
+    {
+      tenureMonths: 12,
+      monthlyAmount: 5417,
+      interestRate: 0.0,
+      cashbackAmount: 4000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 75000,
+      highlightTag: "Recommended (0% Interest)",
+    },
+    {
+      tenureMonths: 24,
+      monthlyAmount: 2708,
+      interestRate: 0.0,
+      cashbackAmount: 4000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 75000,
+      highlightTag: "0% Interest",
+    },
+    {
+      tenureMonths: 36,
+      monthlyAmount: 2192,
+      interestRate: 10.5,
+      cashbackAmount: 4000,
+      isZeroInterest: false,
+      processingFee: 299,
+      mutualFundPledgeAmount: 80000,
+      highlightTag: "Lowest Monthly",
+    },
+  ];
+
+  for (const plan of oneplusPlans) {
+    await prisma.emiPlan.create({
+      data: {
+        ...plan,
+        productId: oneplus.id,
+      },
+    });
+  }
+
+  // 5. Apple iPhone 16
+  const iphone16 = await prisma.product.create({
+    data: {
+      name: "Apple iPhone 16",
+      slug: "iphone-16",
+      brand: "Apple",
+      category: "Smartphones",
+      description:
+        "Powered by the all-new A18 chip designed for Apple Intelligence. Features the innovative Camera Control button, 48MP Fusion camera with 2x optical-quality telephoto, vibrant aerospace-grade aluminum enclosure, and color-infused back glass.",
+      basePrice: 79900,
+      baseMrp: 82900,
+      rating: 4.8,
+      reviewCount: 1100,
+      isNew: true,
+      specs: JSON.stringify({
+        display: '6.1" Super Retina XDR OLED with HDR and Dynamic Island',
+        chip: "A18 chip with 5-core GPU and 16-core Neural Engine",
+        camera: "48MP Fusion with 2x Telephoto + 12MP Ultra-Wide with Macro",
+        battery: "Up to 22 hours video playback with MagSafe wireless fast charging",
+        os: "iOS 18 with Apple Intelligence",
+        weight: "170 grams",
+      }),
+      variants: {
+        create: [
+          {
+            name: "Ultramarine / 128 GB",
+            colorName: "Ultramarine",
+            colorHex: "#37528C",
+            storage: "128 GB",
+            price: 79900,
+            mrp: 82900,
+            stock: 50,
+            sku: "IP16-128-BLU",
+            images: {
+              create: [
+                {
+                  url: "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?auto=format&fit=crop&w=1000&q=80",
+                  alt: "iPhone 16 Ultramarine Front",
+                  isPrimary: true,
+                  order: 1,
+                },
+                {
+                  url: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=1000&q=80",
+                  alt: "iPhone 16 Back Glass",
+                  isPrimary: false,
+                  order: 2,
+                },
+              ],
+            },
+          },
+          {
+            name: "Teal / 256 GB",
+            colorName: "Teal",
+            colorHex: "#4C9A98",
+            storage: "256 GB",
+            price: 89900,
+            mrp: 92900,
+            stock: 40,
+            sku: "IP16-256-TEA",
+            images: {
+              create: [
+                {
+                  url: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1000&q=80",
+                  alt: "iPhone 16 Teal",
+                  isPrimary: true,
+                  order: 1,
+                },
+              ],
+            },
+          },
+          {
+            name: "Black / 512 GB",
+            colorName: "Black",
+            colorHex: "#222222",
+            storage: "512 GB",
+            price: 109900,
+            mrp: 112900,
+            stock: 25,
+            sku: "IP16-512-BLK",
+            images: {
+              create: [
+                {
+                  url: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=1000&q=80",
+                  alt: "iPhone 16 Black",
+                  isPrimary: true,
+                  order: 1,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  const iphone16Plans = [
+    {
+      tenureMonths: 3,
+      monthlyAmount: 26633,
+      interestRate: 0.0,
+      cashbackAmount: 5000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 95000,
+      highlightTag: "Fast Payoff",
+    },
+    {
+      tenureMonths: 6,
+      monthlyAmount: 13317,
+      interestRate: 0.0,
+      cashbackAmount: 5000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 95000,
+      highlightTag: "Most Popular",
+    },
+    {
+      tenureMonths: 12,
+      monthlyAmount: 6658,
+      interestRate: 0.0,
+      cashbackAmount: 5000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 95000,
+      highlightTag: "Recommended (0% Interest)",
+    },
+    {
+      tenureMonths: 24,
+      monthlyAmount: 3329,
+      interestRate: 0.0,
+      cashbackAmount: 5000,
+      isZeroInterest: true,
+      processingFee: 0,
+      mutualFundPledgeAmount: 95000,
+      highlightTag: "0% Interest",
+    },
+    {
+      tenureMonths: 36,
+      monthlyAmount: 2695,
+      interestRate: 10.5,
+      cashbackAmount: 5000,
+      isZeroInterest: false,
+      processingFee: 349,
+      mutualFundPledgeAmount: 100000,
+      highlightTag: "Lowest Monthly",
+    },
+  ];
+
+  for (const plan of iphone16Plans) {
+    await prisma.emiPlan.create({
+      data: {
+        ...plan,
+        productId: iphone16.id,
+      },
+    });
+  }
+
+  console.log("Database seeded successfully with 5 products, variants, and EMI plans!");
 }
 
 main()
